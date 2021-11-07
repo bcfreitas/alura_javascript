@@ -28,28 +28,10 @@ botaoAdicionar.addEventListener("click",
 
                 var tablePacientes = document.querySelector("#tabela-pacientes");
 
-                var pacienteTr = document.createElement("tr");
-                var nomeTd = document.createElement("td");
-                var pesoTd = document.createElement("td");
-                var alturaTd = document.createElement("td");
-                var gorduraTd = document.createElement("td");
-                var imcTd = document.createElement("td");
+                tablePacientes.appendChild(montaTr(novoPaciente));
 
-                nomeTd.textContent = novoPaciente.nome;
-                pesoTd.textContent = novoPaciente.peso;
-                alturaTd.textContent = novoPaciente.altura;
-                gorduraTd.textContent = novoPaciente.gordura;
-                imcTd.textContent = calculaImc(novoPaciente.peso, novoPaciente.altura);
-
-                pacienteTr.appendChild(nomeTd);
-                pacienteTr.appendChild(pesoTd);
-                pacienteTr.appendChild(alturaTd);
-                pacienteTr.appendChild(gorduraTd);
-                pacienteTr.appendChild(imcTd);
-
-                tablePacientes.appendChild(pacienteTr);
-
-
+                form.reset();
+                
                 console.log("adicionar clicado");
             }
         //modo 4: declarar uma função anônima sem parâmetros e utilizar a variável event
@@ -66,9 +48,30 @@ function obtemDadosDoFormulario(form) {
         nome: form.nome.value,
         peso: form.peso.value,
         altura: form.altura.value,
-        gordura: form.gordura.value
+        gordura: form.gordura.value,
+        imc: calculaImc(this.peso, this.altura)
     }
     return paciente;
+}
+
+function montaTr(novoPaciente){
+    var pacienteTr = document.createElement("tr");
+    pacienteTr.classList.add("paciente");
+
+    pacienteTr.appendChild(montaTd(novoPaciente.nome, "info-nome"));
+    pacienteTr.appendChild(montaTd(novoPaciente.peso, "info-peso"));
+    pacienteTr.appendChild(montaTd(novoPaciente.altura, "info-altura"));
+    pacienteTr.appendChild(montaTd(novoPaciente.gordura, "info-gordura"));
+    pacienteTr.appendChild(montaTd(novoPaciente.imc, "info-imc"));
+
+    return pacienteTr;
+}
+
+function montaTd(dado, classe){
+    var td = document.createElement("td");
+    td.textContent = dado;
+    td.classList.add(classe);
+    return td;
 }
 
 function adicionar(e){
