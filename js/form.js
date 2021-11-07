@@ -33,8 +33,8 @@ botaoAdicionar.addEventListener("click",
                     return;
                 }
 
-                var tablePacientes = document.querySelector("#tabela-pacientes");
-                tablePacientes.appendChild(montaTr(novoPaciente));
+                adicionaPacienteNaTabela(novoPaciente);
+                
                 form.reset();
                 //limpa possiveis mensagens de erro;
                 document.querySelector("#mensagens-erro").innerHTML="";
@@ -83,6 +83,12 @@ function montaTd(dado, classe){
     td.textContent = dado;
     td.classList.add(classe);
     return td;
+}
+
+function adicionaPacienteNaTabela(paciente){
+    var pacienteTr =  montaTr(paciente);
+    var tabela = document.querySelector("#tabela-pacientes");
+    tabela.appendChild(pacienteTr);
 }
 
 function exibeMensagensDeErro(erros){
