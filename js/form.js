@@ -25,17 +25,19 @@ botaoAdicionar.addEventListener("click",
                 var form = document.querySelector("#form-adiciona");
 
                 var novoPaciente = obtemDadosDoFormulario(form);
+                
+                var erros = validaPaciente(novoPaciente);
 
-                if(validaPaciente(novoPaciente)){
-                    var tablePacientes = document.querySelector("#tabela-pacientes");
-                    tablePacientes.appendChild(montaTr(novoPaciente));
-                    form.reset();
-                } else {
-                    console.log('paciente invalido');
+                if(erros.length>0){
+                    exibeMensagensDeErro(erros);
                     return;
                 }
-                
 
+                var tablePacientes = document.querySelector("#tabela-pacientes");
+                tablePacientes.appendChild(montaTr(novoPaciente));
+                form.reset();
+                //limpa possiveis mensagens de erro;
+                document.querySelector("#mensagens-erro").innerHTML="";
                 console.log("adicionar clicado");
             }
         //modo 4: declarar uma função anônima sem parâmetros e utilizar a variável event
@@ -81,4 +83,16 @@ function montaTd(dado, classe){
     td.textContent = dado;
     td.classList.add(classe);
     return td;
+}
+
+function exibeMensagensDeErro(erros){
+    var ul = document.querySelector("#mensagens-erro");
+    //limpa mensagens anteriores
+    ul.innerHTML = "";
+    erros.forEach(function(erro){
+        var li = document.createElement("li");
+        li.textContent = erro;
+        ul.appendChild(li);
+    });
+    
 }

@@ -52,14 +52,28 @@ for(var i=0;i<pacientes.length;i++){
 
 
 function validaPaciente(paciente){
-    if(validaPeso(paciente.peso) 
-        && validaAltura(paciente.altura)){
-            return true;
-    } else {
-        return false;
+
+    var erros = [];
+
+    if(paciente.nome.length == 0){
+        erros.push("O nome não pode ser em branco");
     }
 
-};
+    if(!validaPeso(paciente.peso)){
+        erros.push("Peso é inválido");
+    }
+
+    if(!validaAltura(paciente.altura)){ 
+        erros.push("Altura é inválida");
+    }
+
+    if(paciente.gordura.length == 0){
+        erros.push("A gordura não pode ser em branco");
+    }
+
+    return erros;
+
+}
 
 function validaPeso(peso){
     if(peso < 0 || peso > 150){
