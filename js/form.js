@@ -26,12 +26,16 @@ botaoAdicionar.addEventListener("click",
 
                 var novoPaciente = obtemDadosDoFormulario(form);
 
-                var tablePacientes = document.querySelector("#tabela-pacientes");
-
-                tablePacientes.appendChild(montaTr(novoPaciente));
-
-                form.reset();
+                if(validaPaciente(novoPaciente)){
+                    var tablePacientes = document.querySelector("#tabela-pacientes");
+                    tablePacientes.appendChild(montaTr(novoPaciente));
+                    form.reset();
+                } else {
+                    console.log('paciente invalido');
+                    return;
+                }
                 
+
                 console.log("adicionar clicado");
             }
         //modo 4: declarar uma função anônima sem parâmetros e utilizar a variável event
@@ -42,6 +46,11 @@ botaoAdicionar.addEventListener("click",
         //        console.log("adicionar clicado");
         //      }
 );
+
+function adicionar(e){
+    e.preventDefault();
+    console.log("adicionar clicado");
+}
 
 function obtemDadosDoFormulario(form) {
     var paciente = {
@@ -72,9 +81,4 @@ function montaTd(dado, classe){
     td.textContent = dado;
     td.classList.add(classe);
     return td;
-}
-
-function adicionar(e){
-    e.preventDefault();
-    console.log("adicionar clicado");
 }
